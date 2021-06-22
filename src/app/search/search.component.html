@@ -1,0 +1,28 @@
+<div class="container search-container">
+	<div class = 'header'>
+		<img src="https://img.alicdn.com/tfs/TB1g.mWZAL0gK0jSZFtXXXQCXXa-200-200.svg" alt="">
+		<span>
+			给某个臭宝用的
+		</span>
+	</div>
+
+	<div class ='search-item'>
+		<nz-select nzSize="large" [(ngModel)]="area" style="width: 100px" nzPlaceHolder="请选择地区">
+			<nz-option nzValue="uk" nzLabel="英国"></nz-option>
+			<nz-option nzValue="us" nzLabel="美国"></nz-option>
+			<nz-option nzValue="cn" nzLabel="中国"></nz-option>
+			<nz-option nzValue="ca" nzLabel="加拿大"></nz-option>
+			<nz-option nzValue="mx" nzLabel="墨西哥"></nz-option>
+			<nz-option nzValue="de" nzLabel="德国"></nz-option>
+			<nz-option nzValue="fr" nzLabel="法国"></nz-option>
+			<nz-option nzValue="jp" nzLabel="日本"></nz-option>
+		</nz-select>
+
+		<nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+			<input type="text" [(ngModel)]="name" nz-input placeholder="请输入商品名称" />
+		</nz-input-group>
+		<ng-template #suffixButton>
+			<button nz-button nzType="primary" nzSize="large" nzSearch (click) = 'search()'>Search</button>
+		</ng-template>
+	</div>
+</div>

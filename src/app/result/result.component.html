@@ -1,0 +1,35 @@
+<div class = 'container result-container'>
+	<nz-breadcrumb *ngIf = 'areaName'>
+		<nz-breadcrumb-item>
+			{{ areaName }}
+		</nz-breadcrumb-item>
+		<nz-breadcrumb-item>
+			{{ name }}
+		</nz-breadcrumb-item>
+	</nz-breadcrumb>
+
+	<div class = 'table-wrapper'>
+		<nz-table #basicTable [nzData]="list" [nzLoading]="loading">
+			<thead>
+			<tr>
+				<th>商品封面</th>
+				<th>商品名称</th>
+				<th>商品价格</th>
+				<th>原始链接</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td>asd</td>
+				<td>asd</td>
+				<td>asd</td>
+				<td>
+					<a>Delete</a>
+				</td>
+			</tr>
+			</tbody>
+		</nz-table>
+	</div>
+</div>
+
+<div style="display: none" id="htmlContainer" [innerHTML]="html"></div>

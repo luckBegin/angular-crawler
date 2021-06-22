@@ -1,0 +1,24 @@
+.search-container{
+	padding-top: 30px;
+	box-sizing: border-box;
+	.header{
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		box-sizing: border-box;
+		&>span{
+			margin-left: 50px;
+			font-size: 24px;
+			font-weight: bold;
+		}
+	}
+	.search-item{
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		width: 50%;
+		margin: 60px auto 0 auto;
+	}
+}
