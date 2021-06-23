@@ -1,6 +1,9 @@
 <div class = 'container result-container'>
 	<nz-breadcrumb *ngIf = 'areaName'>
 		<nz-breadcrumb-item>
+			<a href="" (click)="back()">返回上一页</a>
+		</nz-breadcrumb-item>
+		<nz-breadcrumb-item>
 			{{ areaName }}
 		</nz-breadcrumb-item>
 		<nz-breadcrumb-item>
@@ -9,27 +12,59 @@
 	</nz-breadcrumb>
 
 	<div class = 'table-wrapper'>
-		<nz-table #basicTable [nzData]="list" [nzLoading]="loading">
-			<thead>
-			<tr>
-				<th>商品封面</th>
-				<th>商品名称</th>
-				<th>商品价格</th>
-				<th>原始链接</th>
-			</tr>
+		<div class="loading-wrapper" *ngIf = 'loading'>
+			<nz-spin></nz-spin>
+		</div>
+		<table class="table">
+			<thead class="thead">
+				<tr>
+					<th class="th-row">商品封面</th>
+					<th class="th-row">商品名称</th>
+					<th class="th-row">商品品牌</th>
+					<th class="th-row">商品价格</th>
+					<th class="th-row">原始链接</th>
+				</tr>
 			</thead>
-			<tbody>
-			<tr>
-				<td>asd</td>
-				<td>asd</td>
-				<td>asd</td>
-				<td>
-					<a>Delete</a>
-				</td>
-			</tr>
+			<tbody *ngIf = '!loading'>
+				<tr class="tr-row" *ngFor = 'let item of list,let i = index '>
+					<td class="td-row" style="width: 200px;">
+						<img [src]="item.src" alt="">
+					</td>
+					<td class="td-row" style="width: 350px;">
+						<p>{{ item.title }}</p>
+					</td>
+					<td class = 'td-row' style="width: 600px;">
+						<div [id]="'detail-' + i" class="html-container" [innerHTML]="getHTML(item)"></div>
+						<nz-spin nzTip="加载中..." *ngIf = 'item.load === "pending"'></nz-spin>
+						<button nz-button nzType="primary" *ngIf  = 'item.load === "false"' (click)="queryBrand(item)">查询</button>
+						<div class="brand-wrapper" *ngIf = 'item.load === "complete"'>
+							<div>
+								<span>品牌名称:</span>
+								<span>{{ item.brandName }}</span>
+							</div>
+
+							<div *ngIf = 'item.brandList.length === 0 ' class="no-brand">
+								<nz-tag [nzColor]="'magenta'">无商标</nz-tag>
+							</div>
+							<div *ngIf = 'item.brandList.length > 0 ' class="brand-list">
+								<nz-tag class = 'brand-item' [nzColor]="'magenta'" *ngFor = 'let sub of item.brandList'>
+									{{ sub }}
+								</nz-tag>
+							</div>
+						</div>
+					</td>
+					<td class="td-row">
+						<span>{{ item.price ? item.price : '未获取到'}}</span>
+					</td>
+					<td class="td-row">
+						<button nz-button nzType="primary" (click)="copy(item.link)">复制</button>
+					</td>
+				</tr>
 			</tbody>
-		</nz-table>
+
+		</table>
+	</div>
+	<div class="wrapper" >
+		<div id="htmlContainer"  [innerHTML]="html"></div>
 	</div>
 </div>
-
-<div style="display: none" id="htmlContainer" [innerHTML]="html"></div>

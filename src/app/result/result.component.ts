@@ -1,27 +1,32 @@
-import {Component} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CrawlerService} from "../service/crawler-service/crawler.service";
 import {MsgService} from "../service/msg.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
 	selector: 'search',
 	templateUrl: './result.component.html' ,
 	styleUrls: ['./result.component.scss']
 })
-export class ResultComponent {
+export class ResultComponent implements OnInit{
 	constructor(
 		private activeRoute: ActivatedRoute ,
 		private service: CrawlerService ,
-		private msg: MsgService
+		private msg: MsgService ,
+		private sanitized: DomSanitizer
 	) {
+
+	}
+
+	ngOnInit(): void {
 		this.activeRoute.params.subscribe( q => {
 			this.area = q.area ;
 			this.name = q.name ;
 			this.areaName = this.areaMap[q.area].name ;
-
 			this.invokeService()
 		})
-	}
+    }
 
 	area: string = '' ;
 	name: string = '' ;
@@ -40,16 +45,49 @@ export class ResultComponent {
 
 	list: any[] = [] ;
 	loading: boolean = true ;
-	html: string = '' ;
+	html: any = '' ;
+	client: any ;
 	async invokeService() {
 		const url = this.areaMap[this.area].url
 		this.html = '' ;
 		const res = await this.service.run(this.area , this.name);
 		if( !res.success ) return this.msg.error('获取亚马逊结果异常') ;
-		this.html = res.data ;
+		this.html = this.sanitized.bypassSecurityTrustHtml(res.data );
 
 		setTimeout(() => {
-			res.client.parse()
+			const data = res.client.parse();
+			this.client = res.client ;
+			this.list = data ;
+			this.loading = false ;
 		} , 500);
+	}
+
+	copy(text) {
+		let textArea = document.createElement("textarea");
+		textArea.value = text;
+		document.body.appendChild(textArea);
+		textArea.focus();
+		textArea.select();
+		try {
+			let successful = document.execCommand('copy');
+			this.msg.success('链接复制成功') ;
+			document.body.removeChild(textArea);
+		} catch (err) {
+			this.msg.error('复制失败,原因:' + err)
+			document.body.removeChild(textArea);
+		}
+	}
+
+	back() {
+		history.back();
+	}
+
+	getHTML(item) {
+		if( !item.brandHTML ) return '' ;
+		return this.sanitized.bypassSecurityTrustHtml( item.brandHTML );
+	}
+
+	queryBrand( item: any ) {
+		this.client.loadBrand( item );
 	}
 }
