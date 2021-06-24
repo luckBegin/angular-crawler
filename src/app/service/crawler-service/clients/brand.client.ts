@@ -8,7 +8,7 @@ class BrandClient {
 	public register(name) {
 		const bname = /\s/g.test(name) ? `"${name}"` : name;
 		const qz = { p: { search: { sq: [{ te: bname, fi: 'BRAND' }] } },
-			type: 'brand', la: 'en', qi: '1-FUglIW75lwt3K7q2WCo9u4x6kBzJnAasR1mdK6QTexA=',
+			type: 'brand', la: 'en', qi: '1-9gJQlPf3V2NCs3HX5/Mu85mKd8xoZSoY6O2TwF+dlRg=',
 			queue: 1, _: '11233'
 		};
 		const data = 'qz=' + lzs.compressToBase64(JSON.stringify(qz));

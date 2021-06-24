@@ -55,7 +55,6 @@ class UsClient {
 	}
 
 	private parseDetail( item ) {
-		debugger
 		const c = $('#detail-' + item.index );
 		const el = c.find('#ppd') ;
 		let brandTag = el.find($(':contains(品牌)')).last();
