@@ -9,7 +9,8 @@ export class CrawlerService {
 	}
 
 	getClient( area: string): any {
-		if( area === 'us') return usClient ;
+		// if( area === 'us') return usClient ;
+		return usClient ;
 	}
 }
 
