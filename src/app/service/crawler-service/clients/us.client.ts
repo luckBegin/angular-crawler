@@ -3,7 +3,6 @@ import * as $ from 'jquery' ;
 import {brandClient} from './brand.client';
 
 const http = axios.create() ;
-
 class UsClient {
 	host = 'https://www.amazon.com';
 
@@ -56,6 +55,7 @@ class UsClient {
 	}
 
 	private parseDetail( item ) {
+		debugger
 		const c = $('#detail-' + item.index );
 		const el = c.find('#ppd') ;
 		let brandTag = el.find($(':contains(品牌)')).last();
@@ -77,6 +77,8 @@ class UsClient {
 		if(brandTag.length !== 0 ) {
 			return this.handleWithTag(brandTag,item);
 		}
+
+		item.load = 'complete' ;
 	}
 
 	handleWithTag(brandTag,item) {
