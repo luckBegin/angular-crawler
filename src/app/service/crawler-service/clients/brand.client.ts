@@ -11,6 +11,7 @@ class BrandClient {
 			type: 'brand', la: 'en', qi: '1-9gJQlPf3V2NCs3HX5/Mu85mKd8xoZSoY6O2TwF+dlRg=',
 			queue: 1, _: '11233'
 		};
+
 		const data = 'qz=' + lzs.compressToBase64(JSON.stringify(qz));
 		return new Promise((resolve, reject) => {
 			http.post('https://www3.wipo.int/branddb/jsp/select.jsp', data)
