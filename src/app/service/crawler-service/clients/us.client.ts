@@ -134,6 +134,7 @@ class UsClient {
 	getRegister(item) {
 		brandClient.register(item.brandName)
 			.then( (r: any) => {
+				debugger
 				const brands = r.facet_counts.facet_fields.SOURCE || {};
 				const arr = [];
 				Object.keys(brands).forEach( key => {
